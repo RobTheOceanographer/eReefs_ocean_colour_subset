@@ -1,0 +1,18 @@
+######################################################################
+                      Starting the subsetter.sh script.
+
+You passed 5 arguments to ./subsetter.sh: 145.0 151.0 -21.0 -15.5 /Users/rjohnson/Documents/2.CURRENT_PROJECTS/ocean_colour_subset/data/A20101229.P1D.ANN_MIM_RMP.nc
+It looks like you're interested in the following region:
+longitude min: 145.0
+longitude max: 151.0
+latitude min: -21.0
+latitude max: -15.5
+Working on the nc file you passed me, which is:
+/Users/rjohnson/Documents/2.CURRENT_PROJECTS/ocean_colour_subset/data/A20101229.P1D.ANN_MIM_RMP.nc
+The full path to this file is:
+/Users/rjohnson/Documents/2.CURRENT_PROJECTS/ocean_colour_subset/data/A20101229.P1D.ANN_MIM_RMP.nc
+The result is saved here:
+/Users/rjohnson/Documents/2.CURRENT_PROJECTS/ocean_colour_subset/data/A20101229.P1D.ANN_MIM_RMP.subset.145.0.151.0.-21.0.-15.5.nc
+
+                           Finshed.
+######################################################################

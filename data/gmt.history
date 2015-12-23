@@ -1,0 +1,9 @@
+# GMT 5 Session common arguments shelf
+BEGIN GMT 5.2.1
+B	2.5
+J	X
+Jm	m0.5i
+JX	X6i+
+R	A20101231.P1D.ANN_MIM_RMP.subset.145.0.151.0.-21.0.-15.5.nc?Chl_MIM
+L	2
+END

@@ -1,0 +1,10 @@
+
+
+-scripts dir has all the src
+-test dir has all the tests and the data to do the tests
+-runtime is the working directory where stuff heppens.
+-doc dir has a document that talks bout what this is.
+-data dir has all the data needed ot make this run, eg climatologies and other stuff.
+
+
+

@@ -1,0 +1,137 @@
+#!/usr/bin/env bash
+######################################################################
+## AUSTRALIAN BUREAU OF METEOROLOGY
+## BUREAU NATIONAL OPERATIONS CENTRE
+## SECTION: OCEANOGRAPHIC SYSTEMS DEVELOPMENT SECTION
+##
+## DATE:         Dec 2015
+## AUTHOR:       Robert Johnson rjohnson@bom.gov.au
+## VERSION:      0.01
+## LANGUAGE:     Bash
+##
+## PURPOSE:      Program to run the thredds data getter for eReefs.
+##
+## USAGE         run <setting>
+##               [Pass the run function the task you want to do.]
+##
+######################################################################
+
+printf "######################################################################\n"
+printf "                            Welcome.\n"
+printf "######################################################################\n"
+
+######################################################################
+## Set up the environment.
+######################################################################
+source ./config.env
+
+
+USAGE="Example usage: $0 crawl"
+
+######################################################################
+## A set of functions that run the jobs.
+######################################################################
+
+function crawl
+{
+# Run the thredds crawler to get the list of data available.
+    printf "Crawling the thredds server catalog for your urls.\n"
+    python $SCRIPT_DIR/eReefs_tds_crawler.py 2>&1 | tee $LOG_DIR/crawl_log.log
+}
+
+
+function pull
+{
+# Run the thredds crawler to get the list of data available.
+    printf "Pulling dates you're interested in from the thredds server.\n"
+    python $SCRIPT_DIR/pull.py 20101001 2>&1 | tee $LOG_DIR/pull_log.log
+}
+
+
+
+
+#
+# function err
+# {
+#     printf "Error : $*\n"
+#     exit 1
+# }
+#
+# function cmd_climatology
+# {
+#     echo "Generating Northern Rainfall Onset climatology"
+#     $SCRIPT_DIR/nro/run-nro_climatology.bash clim
+# }
+#
+# function cmd_skill_plots
+# {
+#     echo "Generating Northern Rainfall Onset skill plots"
+#     $SCRIPT_DIR/nro/run-nro_skill.bash skill
+# }
+#
+# function cmd_enso_plots
+# {
+#     echo "Generating Northern Rainfall Onset ENSO plots"
+#     $SCRIPT_DIR/nro/run-nro_climatology.bash enso
+# }
+#
+# function cmd_gen
+# {
+#     echo "Executing a Northern Rainfall Onset product run (grids plots dials)"
+#     if [[ "$MODEL_FORECAST_DATE" != "" ]]
+#     then
+#         $SCRIPT_DIR/nro/run-nro.bash -d $MODEL_FORECAST_DATE grids plots dials deploy_to_operations || err "Error executing a NRO forecast"
+#     else
+#         $SCRIPT_DIR/nro/run-nro.bash grids plots dials deploy_to_operations || err "Error executing a NRO forecast"
+#     fi
+# }
+#
+# function cmd_gen_catchup
+# {
+#     echo "Executing a Northern Rainfall Onset product run (grids plots dials)"
+#
+#     runDates=( 20120607 20120614 20120621 20120628 20120705 20120712 20120719
+#                20120726 20120802 20120809 20120816 20120823 20120830
+#                20130603 20130606 20130610 20130613 20130617 20130620 20130624
+#                20130627 20130701 20130704 20130708 20130711 20130715 20130718
+#                20130722 20130725 20130729 20130801 20130805 20130808 20130812
+#                20130815 20130819 20130822 20130826 20130829
+#                20140601 20140605 20140608 20140612 20140615 20140619 20140622
+#                20140626 20140629 20140703 20140706 20140710 20140713 20140717
+#                20140720 20140724 20140727 20140731 20140803 20140807 20140810
+#                20140814 20140817 20140821 20140824 20140828 20140831
+#                20150604 20150607 20150611 20150614)
+#
+#     for MODEL_FORECAST_DATE in "${runDates[@]}"
+#     do
+#         printf "\nWorking on NRO forecast for $MODEL_FORECAST_DATE\n"
+#         $SCRIPT_DIR/nro/run-nro.bash -d $MODEL_FORECAST_DATE grids plots dials deploy_to_operations || err "Error executing a NRO forecast"
+#     done
+# }
+#
+while getopts hd: c
+do
+    case $c in
+        d)      GET_DATE=$OPTARG;; # i don't need this one.
+        h)      printf "$USAGE\n"
+                        exit 2;;
+        \?)     printf "$USAGE\n"
+                        exit 2;;
+    esac
+done
+
+shift `expr $OPTIND - 1`
+
+for cmd in $*
+do
+    case $cmd in
+        crawl)  crawl
+                printf "Finished. \n"
+                exit 0;;
+        pull)   pull
+                printf "Finished. \n"
+                exit 0;;
+        *)      printf "$USAGE\n"
+                exit 2;;
+    esac
+done
